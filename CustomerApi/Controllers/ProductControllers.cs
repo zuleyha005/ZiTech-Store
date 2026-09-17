@@ -2,7 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using CustomerApi.Data;
 using CustomerApi.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Caching.Distributed;
+using System.Text.Json;
 
 namespace CustomerApi.Controllers;
 
@@ -11,34 +12,11 @@ namespace CustomerApi.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly CustomerDbContext _context;
-    private readonly IMemoryCache _cache;
-    private long GetProductCacheVersion()
-    {
-        const string versionKey = "products_cache_version";
-
-        if (_cache.TryGetValue(versionKey, out long version))
-        {
-            return version;
-        }
-
-        version = 1;
-
-        _cache.Set(versionKey, version);
-
-        return version;
-    }
-    private void InvalidateProductCache()
-    {
-        const string versionKey = "products_cache_version";
-
-        var currentVersion = GetProductCacheVersion();
-
-        _cache.Set(versionKey, currentVersion + 1);
-    }
+    private readonly IDistributedCache _cache;
 
     public ProductController(
         CustomerDbContext context,
-        IMemoryCache cache)
+        IDistributedCache cache)
     {
         _context = context;
         _cache = cache;
@@ -46,24 +24,34 @@ public class ProductController : ControllerBase
 
     // Ürünleri getir
     [HttpGet]
-    public IActionResult GetProducts()
+    public async Task<IActionResult> GetProducts()
     {
-        var version = GetProductCacheVersion();
+        var version = await GetProductCacheVersionAsync();
         var cacheKey = $"products_all_v{version}";
 
-        if (_cache.TryGetValue(cacheKey, out List<Product>? cachedProducts))
+        var cachedProducts = await _cache.GetStringAsync(cacheKey);
+
+        if (!string.IsNullOrEmpty(cachedProducts))
         {
-            return Ok(cachedProducts);
+            var productsFromCache =
+                JsonSerializer.Deserialize<List<Product>>(cachedProducts);
+
+            return Ok(productsFromCache);
         }
 
-        var products = _context.Products
+        var products = await _context.Products
             .OrderBy(x => x.Id)
-            .ToList();
+            .ToListAsync();
 
-        _cache.Set(
+        var serializedProducts = JsonSerializer.Serialize(products);
+
+        await _cache.SetStringAsync(
             cacheKey,
-            products,
-            TimeSpan.FromMinutes(5)
+            serializedProducts,
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            }
         );
 
         return Ok(products);
@@ -71,28 +59,38 @@ public class ProductController : ControllerBase
 
     // ID'ye göre ürün getir
     [HttpGet("{id}")]
-    public IActionResult GetProduct(int id)
+    public async Task<IActionResult> GetProduct(int id)
     {
-        var version = GetProductCacheVersion();
+        var version = await GetProductCacheVersionAsync();
         var cacheKey = $"product_{id}_v{version}";
 
-        if (_cache.TryGetValue(cacheKey, out Product? cachedProduct))
+        var cachedProduct = await _cache.GetStringAsync(cacheKey);
+
+        if (!string.IsNullOrEmpty(cachedProduct))
         {
-            return Ok(cachedProduct);
+            var productFromCache =
+                JsonSerializer.Deserialize<Product>(cachedProduct);
+
+            return Ok(productFromCache);
         }
 
-        var product = _context.Products
-            .FirstOrDefault(x => x.Id == id);
+        var product = await _context.Products
+            .FirstOrDefaultAsync(x => x.Id == id);
 
         if (product == null)
         {
             return NotFound();
         }
 
-        _cache.Set(
+        var serializedProduct = JsonSerializer.Serialize(product);
+
+        await _cache.SetStringAsync(
             cacheKey,
-            product,
-            TimeSpan.FromMinutes(5)
+            serializedProduct,
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            }
         );
 
         return Ok(product);
@@ -100,7 +98,7 @@ public class ProductController : ControllerBase
 
     // Ürünleri sayfalı şekilde getir
     [HttpGet("paged")]
-    public IActionResult GetProductsPaged(
+    public async Task<IActionResult> GetProductsPaged(
     int page = 1,
     int pageSize = 1000,
     string? search = null,
@@ -119,7 +117,7 @@ public class ProductController : ControllerBase
             pageSize = 1000;
         }
 
-        var version = GetProductCacheVersion();
+        var version = await GetProductCacheVersionAsync();
 
         var cacheKey =
             $"products_paged_v{version}_" +
@@ -130,9 +128,15 @@ public class ProductController : ControllerBase
             $"maxPrice:{maxPrice}_" +
             $"sort:{sort}_" +
             $"category:{category?.Trim().ToLowerInvariant()}";
-        if (_cache.TryGetValue(cacheKey, out object? cachedResult))
+
+        var cachedResult = await _cache.GetStringAsync(cacheKey);
+
+        if (!string.IsNullOrEmpty(cachedResult))
         {
-            return Ok(cachedResult);
+            return Content(
+                cachedResult,
+                "application/json"
+            );
         }
 
         var products = _context.Products.AsQueryable();
@@ -551,10 +555,15 @@ public class ProductController : ControllerBase
             totalPages
         };
 
-        _cache.Set(
+        var serializedResult = JsonSerializer.Serialize(result);
+
+        await _cache.SetStringAsync(
             cacheKey,
-            result,
-            TimeSpan.FromMinutes(5)
+            serializedResult,
+            new DistributedCacheEntryOptions
+            {
+                AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(5)
+            }
         );
 
         return Ok(result);
@@ -562,19 +571,19 @@ public class ProductController : ControllerBase
 
     // Ürün ekle
     [HttpPost]
-    public IActionResult AddProduct(Product product)
+    public async Task<IActionResult> AddProduct(Product product)
     {
         _context.Products.Add(product);
         _context.SaveChanges();
 
-        InvalidateProductCache();
+        await InvalidateProductCacheAsync();
 
         return Ok(product);
     }
 
     // Ürün güncelle
     [HttpPut("{id}")]
-    public IActionResult UpdateProduct(int id, Product updatedProduct)
+    public async Task<IActionResult> UpdateProduct(int id, Product updatedProduct)
     {
         var product = _context.Products.FirstOrDefault(x => x.Id == id);
 
@@ -589,14 +598,14 @@ public class ProductController : ControllerBase
 
         _context.SaveChanges();
 
-        InvalidateProductCache();
+        await InvalidateProductCacheAsync();
 
         return Ok(product);
     }
 
     // Ürün sil
     [HttpDelete("{id}")]
-    public IActionResult DeleteProduct(int id)
+    public async Task<IActionResult> DeleteProduct(int id)
     {
         var product = _context.Products.FirstOrDefault(x => x.Id == id);
 
@@ -608,9 +617,39 @@ public class ProductController : ControllerBase
         _context.Products.Remove(product);
         _context.SaveChanges();
 
-        InvalidateProductCache();
+        await InvalidateProductCacheAsync();
 
         return Ok(product);
+    }
+
+    private async Task<long> GetProductCacheVersionAsync()
+    {
+        const string versionKey = "products_cache_version";
+
+        var cachedVersion = await _cache.GetStringAsync(versionKey);
+
+        if (long.TryParse(cachedVersion, out var version))
+        {
+            return version;
+        }
+
+        version = 1;
+
+        await _cache.SetStringAsync(versionKey, version.ToString());
+
+        return version;
+    }
+
+    private async Task InvalidateProductCacheAsync()
+    {
+        const string versionKey = "products_cache_version";
+
+        var currentVersion = await GetProductCacheVersionAsync();
+
+        await _cache.SetStringAsync(
+            versionKey,
+            (currentVersion + 1).ToString()
+        );
     }
 
 }
