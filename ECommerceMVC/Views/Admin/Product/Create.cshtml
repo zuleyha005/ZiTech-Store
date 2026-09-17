@@ -1,0 +1,32 @@
+@model ECommerceMVC.Models.Product
+
+<h1>Yeni Ürün Ekle</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label">Ürün Adı</label>
+        <input asp-for="Name" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Price" class="form-label">Fiyat</label>
+        <input asp-for="Price" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Description" class="form-label">Açıklama</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Ürünü Kaydet
+    </button>
+
+</form>
+
+<br />
+
+<a asp-action="Index" class="btn btn-secondary">
+    Ürün Listesine Dön
+</a>

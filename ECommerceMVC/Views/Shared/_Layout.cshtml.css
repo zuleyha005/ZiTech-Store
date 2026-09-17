@@ -1,0 +1,168 @@
+﻿a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #0077cc;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+/* Genel site arka planı */
+html,
+body {
+    background-color: #eaeded !important;
+}
+
+/* Ana içerik alanı */
+main {
+    background-color: #eaeded !important;
+}
+
+/* İçerik alanlarının arka planını şeffaf yap */
+.container {
+    background-color: transparent;
+}
+
+/* Sayfanın ana arka planı */
+main {
+    background-color: #eaeded !important;
+}
+
+/* Ana içerik alanının arka planı */
+main .container {
+    background-color: transparent !important;
+}
+
+.navbar {
+    background-color: #1f4d3a !important;
+}
+
+@media (max-width: 767px) {
+
+    /* ÜST NAVBAR */
+    .navbar {
+        padding: 10px 12px;
+    }
+
+    .navbar .container {
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0;
+    }
+
+    .navbar-brand {
+        font-size: 20px;
+        margin-bottom: 8px;
+    }
+
+    .navbar .navbar-nav {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+    }
+
+    .navbar .navbar-nav .nav-item {
+        margin: 0 !important;
+    }
+
+    /* ARAMA KUTUSU */
+    .navbar form {
+        width: 100%;
+        display: flex;
+        margin: 8px 0;
+    }
+
+    .navbar form input {
+        min-width: 0;
+        width: 100%;
+    }
+
+    /* HESABIM / ÇIKIŞ */
+    .navbar .btn-warning {
+        white-space: nowrap;
+    }
+
+    /* İKİNCİ NAVBAR */
+    /* İKİNCİ NAVBAR */
+.featured-bar {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+
+    justify-content: flex-start !important;
+    align-items: center;
+
+    gap: 20px;
+
+    padding: 10px 15px;
+
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+
+    white-space: nowrap;
+
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+
+    scrollbar-width: auto;
+}
+
+.featured-bar a {
+    display: inline-block;
+    flex: 0 0 auto !important;
+
+    white-space: nowrap !important;
+
+    width: auto !important;
+    min-width: max-content;
+}
+}

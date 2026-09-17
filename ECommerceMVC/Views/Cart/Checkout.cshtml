@@ -1,0 +1,219 @@
+@model List<ECommerceMVC.Models.CartItemViewModel>
+
+@functions {
+    string GetProductImage(string productName)
+    {
+        var name = productName.ToLower();
+
+        if (name.Contains("bisiklet"))
+            return "/images/bisiklet.jpg";
+
+        if (name.Contains("duvar saati"))
+            return "/images/duvar-saati.jpg";
+
+        if (name.Contains("mouse"))
+            return "/images/mouse.jpg";
+
+        if (name.Contains("çalışma masası"))
+            return "/images/masa.jpg";
+
+        if (name.Contains("masa lambası"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("laptop çantası"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("laptop"))
+            return "/images/laptop.jpg";
+
+        if (name.Contains("yazıcı"))
+            return "/images/yazici.jpg";
+
+        if (name.Contains("powerbank"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("ofis sandalyesi"))
+            return "/images/ofis-sandalyesi.jpg";
+
+        if (name.Contains("akıllı saat"))
+            return "/images/akilli-saat.jpg";
+
+        if (name.Contains("fitness matı"))
+            return "/images/fitness-mat.jpg";
+
+        if (name.Contains("tablet"))
+            return "/images/tablet.jpg";
+
+        if (name.Contains("telefon"))
+            return "/images/telefon.jpg";
+
+        if (name.Contains("ssd"))
+            return "/images/ssd.jpg";
+
+        if (name.Contains("kulaklık"))
+            return "/images/kulaklik.jpg";
+
+        if (name.Contains("kamera"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("televizyon"))
+            return "/images/televizyon.jpg";
+
+        if (name.Contains("konsol"))
+            return "/images/konsol.jpg";
+
+        if (name.Contains("klavye"))
+            return "/images/klavye.jpg";
+
+        if (name.Contains("parfüm"))
+            return "/images/parfum.jpg";
+
+        if (name.Contains("gözlük"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("kitap"))
+            return "/images/kitap.jpg";
+
+        if (name.Contains("oyuncak"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("ayakkabı"))
+            return "/images/ayakkabi.jpg";
+
+        if (name.Contains("çanta"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("saat"))
+            return "/images/saat.jpg";
+
+        if (name.Contains("takı"))
+            return "/images/taki.jpg";
+
+        if (name.Contains("kozmetik"))
+            return "/images/kozmetik.jpg";
+
+        if (name.Contains("mobilya"))
+            return "/images/mobilya.jpg";
+
+        if (name.Contains("dekoratif vazo"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("güneş gözlüğü"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("puzzle"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("fotoğraf makinesi"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("valiz"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("şarj cihazı"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("dambıl"))
+            return "/images/dambıl.jpg";
+
+        if (name.Contains("şampuan"))
+            return "/images/şampuan.jpg";
+
+        if (name.Contains("bluetooth hoparlör"))
+            return "/images/hoparlör.jpg";
+
+        if (name.Contains("monitör"))
+            return "/images/monitör.jpg";
+
+        if (name.Contains("usb bellek"))
+            return "/images/usb-bellek.jpg";
+
+        if (name.Contains("elektrikli süpürge"))
+            return "/images/elektrikli-süpürge.jpg";
+
+        return "";
+    }
+}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">Ödeme</h4>
+        </div>
+
+        <div class="card-body">
+
+            <h5 class="mb-3">Sipariş Özeti</h5>
+
+            @foreach (var item in Model)
+            {
+                <div class="border-bottom py-3">
+
+                    <div class="row">
+
+                        <div class="col-md-2">
+                            <img src="@GetProductImage(item.ProductName)" alt="@item.ProductName"
+                                 class="checkout-product-image" />
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Ürün:</strong>
+                            @item.ProductName
+                        </div>
+
+                        <div class="col-md-2">
+                            <strong>Adet:</strong>
+                            @item.Quantity
+                        </div>
+
+                        <div class="col-md-2">
+                            <strong>Birim Fiyat:</strong>
+                            @item.Price.ToString("N2") ₺
+                        </div>
+
+                        <div class="col-md-2">
+                            <strong>Toplam:</strong>
+                            @((item.Price * item.Quantity).ToString("N2")) ₺
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+            <div class="text-end mt-4">
+
+                <h4>
+                    Genel Toplam:
+                    <span class="text-danger">
+                        @Model.Sum(x => x.Price * x.Quantity).ToString("N2") ₺
+                    </span>
+                </h4>
+
+            </div>
+
+            <div class="mt-4">
+                <form asp-controller="UserCart" asp-action="CompletePayment" method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <button type="submit" class="btn btn-success">
+                        Ödemeyi Tamamla
+                    </button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .checkout-product-image {
+        width: 90px;
+        height: 80px;
+        object-fit: contain;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 5px;
+    }
+</style>

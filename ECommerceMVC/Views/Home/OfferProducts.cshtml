@@ -1,0 +1,164 @@
+@model List<ECommerceMVC.Models.Product>
+
+@functions {
+    string GetProductImage(string productName)
+    {
+        var name = productName.ToLower();
+
+        if (name.Contains("laptop"))
+            return "/images/laptop.jpg";
+
+        if (name.Contains("akıllı saat"))
+            return "/images/akilli-saat.jpg";
+
+        if (name.Contains("kulaklık"))
+            return "/images/kulaklik.jpg";
+
+        if (name.Contains("ofis sandalyesi"))
+            return "/images/ofis-sandalyesi.jpg";
+
+        return "";
+    }
+}
+
+<style>
+    .offer-products-page {
+        background-color: #f7f5ef;
+        padding: 30px 0 50px 0;
+        min-height: 70vh;
+    }
+
+    .offer-title {
+        color: #3f5143;
+        font-weight: 700;
+        margin-bottom: 30px;
+    }
+
+    .offer-product-card {
+        background-color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 20px;
+        height: 100%;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        transition: 0.2s;
+    }
+
+    .offer-product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+    }
+
+    .offer-product-card img {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+    }
+
+    .product-name {
+        color: #3f5143;
+        font-weight: 600;
+        margin-top: 15px;
+    }
+
+    .product-price {
+        color: #536b58;
+        font-size: 19px;
+        font-weight: 700;
+    }
+
+    .buy-button {
+        background-color: #536b58;
+        color: white;
+        border: none;
+        border-radius: 7px;
+    }
+
+    .buy-button:hover {
+        background-color: #435746;
+        color: white;
+    }
+
+    body {
+        background-color: #f7f5ef;
+    }
+
+    main {
+        background-color: #f7f5ef;
+    }
+
+    .container {
+        background-color: transparent;
+    }
+</style>
+
+<div class="offer-products-page">
+
+    <div class="container">
+
+        <h2 class="offer-title text-center">
+            @ViewBag.OfferType Fırsatları
+        </h2>
+
+        <div class="row">
+
+            @foreach (var product in Model)
+            {
+                <div class="col-md-3 mb-4">
+
+                    <div class="offer-product-card">
+
+                        <img src="@GetProductImage(product.Name ?? "")" alt="@product.Name" />
+
+                        <div class="product-name">
+                            @product.Name
+                        </div>
+
+                        <div class="product-price">
+                            @product.Price ₺
+                        </div>
+
+                        <button type="button" class="btn buy-button btn-sm mt-3" onclick="addToCart(@product.Id)">
+                            🛒 Sepete Ekle
+                        </button>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    async function addToCart(productId) {
+        try {
+            const response = await fetch('/Cart/AddToCart', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    productId: productId
+                })
+            });
+
+            if (response.ok) {
+                window.location.href = '/Cart';
+            }
+            else if (response.status === 401) {
+                window.location.href = '/Account/Login';
+            }
+            else {
+                alert("Ürün sepete eklenirken bir hata oluştu.");
+            }
+        }
+        catch (error) {
+            console.error(error);
+            alert("Sunucuya bağlanırken bir hata oluştu.");
+        }
+    }
+</script>

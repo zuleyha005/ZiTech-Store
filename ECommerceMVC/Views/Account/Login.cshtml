@@ -1,0 +1,214 @@
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Giriş Yap - ZiTech Store</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <style>
+            body {
+                background-color: #eaeded;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .login-header {
+                background-color: #1f4d3a;
+                height: 65px;
+                display: flex;
+                align-items: center;
+                padding-left: 35px;
+            }
+
+            .logo {
+                color: white;
+                font-size: 27px;
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+            .logo span {
+                color: #d8c9a8;
+            }
+
+            .logo:hover {
+                color: white;
+                text-decoration: none;
+            }
+
+            .login-container {
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 15px;
+            }
+
+            .login-card {
+                background-color: white;
+                width: 100%;
+                max-width: 400px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                padding: 30px;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            }
+
+            .login-title {
+                font-size: 28px;
+                font-weight: 500;
+                margin-bottom: 25px;
+                color: #111;
+            }
+
+            .form-label {
+                font-weight: 600;
+                font-size: 14px;
+                color: #111;
+            }
+
+            .form-control {
+                height: 45px;
+                border: 1px solid #a6a6a6;
+            }
+
+            .form-control:focus {
+                border-color: #f0ad4e;
+                box-shadow: 0 0 0 2px rgba(240, 173, 78, 0.25);
+            }
+
+            .login-button {
+                width: 100%;
+                background-color: #ffd814;
+                border: 1px solid #fcd200;
+                color: #111;
+                height: 45px;
+                font-weight: 500;
+                margin-top: 10px;
+            }
+
+            .login-button:hover {
+                background-color: #f7ca00;
+                color: #111;
+            }
+
+            .login-info {
+                font-size: 13px;
+                color: #555;
+                margin-top: 20px;
+                line-height: 1.5;
+            }
+
+            .register-link {
+                text-align: center;
+                margin-top: 25px;
+                padding-top: 20px;
+                border-top: 1px solid #ddd;
+                font-size: 14px;
+            }
+
+            .register-button {
+                width: 100%;
+                background-color: #fff;
+                border: 1px solid #adb1b8;
+                color: #111;
+                margin-top: 10px;
+            }
+
+            .register-button:hover {
+                background-color: #f7f7f7;
+                color: #111;
+            }
+
+            .footer {
+                text-align: center;
+                padding: 20px;
+                font-size: 12px;
+                color: #555;
+            }
+    </style>
+</head>
+
+<body>
+
+    <!-- Üst Menü -->
+    <div class="login-header">
+        <a asp-controller="Home" asp-action="Index" class="logo">
+            ZiTech <span>Store</span>
+        </a>
+    </div>
+
+    <!-- Login Alanı -->
+    <div class="login-container">
+
+        <div class="login-card">
+
+            <h1 class="login-title">Giriş Yap</h1>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger">
+                    @ViewBag.Error
+                </div>
+            }
+
+            <form asp-controller="Account" asp-action="Login" method="post">
+
+                <div class="form-group">
+                    <label class="form-label">E-posta adresi</label>
+
+                    <input type="text" name="email" class="form-control" placeholder="E-posta adresinizi girin"
+                           required />
+                </div>
+
+                <div class="form-group mt-3">
+                    <label class="form-label">Şifre</label>
+
+                    <input type="password" name="password" class="form-control" placeholder="Şifrenizi girin"
+                           required />
+                </div>
+
+                <button type="submit" class="btn login-button">
+                    Giriş Yap
+                </button>
+
+            </form>
+
+            <div class="login-info">
+                Giriş yaparak hesabınıza erişebilir,
+                ürünleri sepetinize ekleyebilir ve
+                sipariş işlemlerinizi gerçekleştirebilirsiniz.
+            </div>
+
+            <div class="register-link">
+
+                <div>
+                    Henüz hesabınız yok mu?
+                </div>
+
+                <a asp-controller="Account" asp-action="Register" class="btn btn-outline-secondary w-100 mt-2">
+                    Yeni hesap oluştur
+                </a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Alt Bilgi -->
+    <div class="footer">
+        © 2026 ZiTech Store - Tüm hakları saklıdır.
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ZiTech Store</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/ECommerceMVC.styles.css" asp-append-version="true" />
+</head>
+
+<body>
+    <header>
+        <nav
+            class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light site-navbar border-bottom box-shadow mb-0">
+            <div class="container-fluid">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <span class="logo-zitech">ZiTech</span>
+                    <span class="logo-store">Store</span>
+                </a>
+
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">
+                        Ana Sayfa
+                    </a>
+                </li>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <form class="amazon-search d-flex" onsubmit="searchProducts(); return false;">
+
+                        <input type="text" id="productSearch" class="form-control"
+                               placeholder="ZiTech Store.com.tr'de arama yapın..." />
+
+                        <button type="button" onclick="searchProducts()">
+                            🔍
+                        </button>
+
+                    </form>
+                    <ul class="navbar-nav flex-grow-1">
+                        <ul class="navbar-nav ms-auto d-flex align-items-center">
+
+                            <li class="nav-item me-3">
+                                @if (User.Identity != null && User.Identity.IsAuthenticated)
+                                {
+                                    <a asp-controller="Account" asp-action="Logout" class="btn btn-warning">
+                                        Çıkış Yap
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="Login" class="btn btn-warning">
+                                        Giriş Yap
+                                    </a>
+                                }
+                            </li>
+
+                            @if (User.Identity != null && User.Identity.IsAuthenticated)
+                            {
+                                <li class="nav-item me-3">
+                                    <a asp-controller="Account" asp-action="MyAccount" class="btn btn-warning">
+                                        Hesabım
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a asp-controller="UserCart" asp-action="Index" class="nav-link">
+                                    Sepetim:
+                                    <span id="cartCount" class="badge bg-warning text-dark">0</span>
+                                </a>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="featured-bar sub-navbar">
+
+                <a asp-controller="Home" asp-action="FeaturedProducts">
+                    Öne Çıkan Ürünler
+                </a>
+                <a asp-controller="Home" asp-action="AllProducts">
+                    Tüm Ürünler
+                </a>
+
+                <a asp-controller="Home" asp-action="Categories">
+                    Kategoriler
+                </a>
+                <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Elektronik">
+                    Elektronik
+                </a>
+
+                <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Ev ve Yaşam">
+                    Ev & Yaşam
+                </a>
+
+                <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Ofis">
+                    Ofis
+                </a>
+
+                <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Dekorasyon">
+                    Dekorasyon
+                </a>
+
+                <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Oyuncak">
+                    Oyuncak
+                </a>
+
+            </div>
+        </header>
+        <div class="container">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                &copy; 2026 - ZiTech Store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            </div>
+        </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        @await RenderSectionAsync("Scripts", required: false)
+    </body>
+
+    <script>
+        async function updateCartCount() {
+        try {
+        const response = await fetch('/Cart/Count');
+
+        if (response.ok) {
+        const count = await response.json();
+
+        const cartCount = document.getElementById("cartCount");
+
+        if (cartCount) {
+        cartCount.innerText = count;
+        }
+        }
+        }
+        catch (error) {
+        console.error("Sepet sayısı alınamadı:", error);
+        }
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+        updateCartCount();
+        });
+    </script>
+    <script>
+
+        let productRows = [];
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+        productRows = document.querySelectorAll(".table tbody tr");
+
+        });
+
+
+        function searchProducts() {
+
+        const searchInput = document.getElementById("productSearch");
+
+        if (!searchInput) {
+        return;
+        }
+
+        const searchText = searchInput.value.trim();
+
+        if (searchText === "") {
+        window.location.href = "/Home/AllProducts?page=1";
+        return;
+        }
+
+        window.location.href =
+        "/Home/AllProducts?page=1&search=" +
+        encodeURIComponent(searchText);
+        }
+    </script>
+
+</html>
+

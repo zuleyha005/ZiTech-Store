@@ -1,0 +1,580 @@
+﻿@functions {
+    string GetProductImage(string productName)
+    {
+        var name = productName.ToLower();
+
+        if (name.Contains("bisiklet"))
+            return "/images/bisiklet.jpg";
+
+        if (name.Contains("duvar saati"))
+            return "/images/duvar-saati.jpg";
+
+        if (name.Contains("mouse"))
+            return "/images/mouse.jpg";
+
+        if (name.Contains("çalışma masası"))
+            return "/images/masa.jpg";
+
+        if (name.Contains("masa lambası"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("laptop"))
+            return "/images/laptop.jpg";
+
+        if (name.Contains("laptop çantası"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("yazıcı"))
+            return "/images/yazici.jpg";
+
+        if (name.Contains("powerbank"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("ofis sandalyesi"))
+            return "/images/ofis-sandalyesi.jpg";
+
+        if (name.Contains("akıllı saat"))
+            return "/images/akilli-saat.jpg";
+
+        if (name.Contains("fitness matı"))
+            return "/images/fitness-mat.jpg";
+
+        if (name.Contains("tablet"))
+            return "/images/tablet.jpg";
+
+        if (name.Contains("telefon"))
+            return "/images/telefon.jpg";
+
+        if (name.Contains("ssd"))
+            return "/images/ssd.jpg";
+
+        if (name.Contains("kulaklık"))
+            return "/images/kulaklik.jpg";
+
+        if (name.Contains("kamera"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("televizyon"))
+            return "/images/televizyon.jpg";
+
+        if (name.Contains("konsol"))
+            return "/images/konsol.jpg";
+
+        if (name.Contains("klavye"))
+            return "/images/klavye.jpg";
+
+        if (name.Contains("parfüm"))
+            return "/images/parfum.jpg";
+
+        if (name.Contains("gözlük"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("kitap"))
+            return "/images/kitap.jpg";
+
+        if (name.Contains("oyuncak"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("ayakkabı"))
+            return "/images/ayakkabi.jpg";
+
+        if (name.Contains("çanta"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("saat"))
+            return "/images/saat.jpg";
+
+        if (name.Contains("takı"))
+            return "/images/taki.jpg";
+
+        if (name.Contains("kozmetik"))
+            return "/images/kozmetik.jpg";
+
+        if (name.Contains("mobilya"))
+            return "/images/mobilya.jpg";
+
+        if (name.Contains("dekorasyon"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("aydınlatma"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("bahçe"))
+            return "/images/bahce.jpg";
+
+        if (name.Contains("ofis"))
+            return "/images/ofis.jpg";
+
+        if (name.Contains("kırtasiye"))
+            return "/images/kirtasiye.jpg";
+
+        if (name.Contains("dekoratif vazo"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("güneş gözlüğü"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("puzzle"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("fotoğraf makinesi"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("valiz"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("şarj cihazı"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("dambıl"))
+            return "/images/dambıl.jpg";
+
+        if (name.Contains("şampuan"))
+            return "/images/şampuan.jpg";
+
+        if (name.Contains("bluetooth hoparlör"))
+            return "/images/hoparlör.jpg";
+
+        if (name.Contains("monitör"))
+            return "/images/monitör.jpg";
+
+        if (name.Contains("usb bellek"))
+            return "/images/usb-bellek.jpg";
+
+        if (name.Contains("elektrikli süpürge"))
+            return "/images/elektrikli-süpürge.jpg";
+
+        return "";
+    }
+}
+
+@{
+    ViewData["Title"] = "Ana Sayfa";
+}
+
+<style>
+    body {
+        background-color: #f7f5ef;
+    }
+
+    .hero-section {
+        background: linear-gradient(135deg, #dce6dc, #eef1e8);
+        border-radius: 18px;
+        padding: 60px 40px;
+        margin-top: 25px;
+        margin-bottom: 40px;
+    }
+
+    .hero-title {
+        color: #3f5143;
+        font-size: 42px;
+        font-weight: 700;
+    }
+
+    .hero-text {
+        color: #657266;
+        font-size: 18px;
+        max-width: 600px;
+        margin-top: 15px;
+    }
+
+    .main-button {
+        background-color: #536b58;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        margin-top: 20px;
+        font-weight: 600;
+    }
+
+    .main-button:hover {
+        background-color: #435746;
+        color: white;
+    }
+
+    .section-title {
+        color: #3f5143;
+        font-weight: 700;
+        margin-bottom: 25px;
+    }
+
+    .category-card {
+        background-color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 28px 15px;
+        text-align: center;
+        height: 150px;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.07);
+        transition: all 0.2s ease;
+        text-decoration: none;
+        color: #3f5143;
+        display: block;
+    }
+
+    .category-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 7px 18px rgba(0, 0, 0, 0.12);
+        color: #536b58;
+        text-decoration: none;
+    }
+
+    .category-icon {
+        font-size: 35px;
+        margin-bottom: 12px;
+    }
+
+    .category-name {
+        font-size: 18px;
+        font-weight: 600;
+    }
+
+    .offer-section {
+        background-color: #ebe5d9;
+        border-radius: 18px;
+        padding: 35px;
+        margin-top: 45px;
+    }
+
+    .offer-card {
+        background-color: white;
+        border: none;
+        border-radius: 12px;
+        padding: 15px;
+        height: 100%;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .offer-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        border-radius: 8px;
+    }
+
+    .offer-name {
+        color: #3f5143;
+        font-weight: 600;
+        margin-top: 12px;
+    }
+
+    .offer-price {
+        color: #536b58;
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .featured-section {
+        background-color: white;
+        border-radius: 18px;
+        padding: 40px;
+        margin-top: 45px;
+        text-align: center;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .featured-text {
+        color: #707870;
+        margin-bottom: 20px;
+    }
+
+    .advantage-card {
+        background-color: white;
+        border: none;
+        border-radius: 14px;
+        padding: 25px 15px;
+        text-align: center;
+        height: 100%;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
+    }
+
+    .advantage-icon {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .advantage-title {
+        color: #3f5143;
+        font-weight: 600;
+    }
+
+    .advantage-text {
+        color: #777;
+        font-size: 14px;
+    }
+</style>
+
+<div class="container">
+
+    <!-- HERO -->
+
+    <div class="hero-section">
+
+        <h1 class="hero-title">
+            Alışverişin Daha Sade Hali
+        </h1>
+
+        <p class="hero-text">
+            İhtiyacınız olan ürünleri keşfedin, favorilerinizi bulun
+            ve alışverişin keyfini çıkarın.
+        </p>
+
+        <a asp-controller="Home" asp-action="AllProducts" class="btn main-button">
+            Alışverişe Başla
+        </a>
+
+    </div>
+
+
+    <!-- KATEGORİLER -->
+
+    <h2 class="section-title text-center">
+        Kategorileri Keşfet
+    </h2>
+
+    <div class="row">
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Elektronik" class="category-card">
+
+                <div class="category-icon">💻</div>
+                <div class="category-name">Elektronik</div>
+
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Ev ve Yaşam" class="category-card">
+
+                <div class="category-icon">🏠</div>
+                <div class="category-name">Ev & Yaşam</div>
+
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Ofis" class="category-card">
+
+                <div class="category-icon">💼</div>
+                <div class="category-name">Ofis</div>
+
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Dekorasyon" class="category-card">
+
+                <div class="category-icon">🪴</div>
+                <div class="category-name">Dekorasyon</div>
+
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Giyim" class="category-card">
+
+                <div class="category-icon">👕</div>
+                <div class="category-name">Giyim</div>
+
+            </a>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="Oyuncak" class="category-card">
+
+                <div class="category-icon">🧸</div>
+                <div class="category-name">Oyuncak</div>
+
+            </a>
+        </div>
+
+    </div>
+
+    <!-- FIRSAT ÜRÜNLERİ -->
+
+<div class="offer-section">
+
+    <h2 class="section-title text-center">
+        Fırsat Ürünleri
+    </h2>
+
+    <div class="row">
+
+        <!-- LAPTOP -->
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Home"
+               asp-action="OfferProducts"
+               asp-route-type="Laptop"
+               style="text-decoration: none; color: inherit;">
+
+                <div class="offer-card">
+
+                    <img src="/images/laptop.jpg"
+                         alt="Laptop" />
+
+                    <div class="offer-name">
+                        Laptop
+                    </div>
+
+                    <div class="offer-price">
+                        Fırsatları Keşfet
+                    </div>
+
+                </div>
+
+            </a>
+        </div>
+
+
+        <!-- AKILLI SAAT -->
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Home"
+               asp-action="OfferProducts"
+               asp-route-type="Akıllı Saat"
+               style="text-decoration: none; color: inherit;">
+
+                <div class="offer-card">
+
+                    <img src="/images/akilli-saat.jpg"
+                         alt="Akıllı Saat" />
+
+                    <div class="offer-name">
+                        Akıllı Saat
+                    </div>
+
+                    <div class="offer-price">
+                        Fırsatları Keşfet
+                    </div>
+
+                </div>
+
+            </a>
+        </div>
+
+
+        <!-- KABLOSUZ KULAKLIK -->
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Home"
+               asp-action="OfferProducts"
+               asp-route-type="Kablosuz Kulaklık"
+               style="text-decoration: none; color: inherit;">
+
+                <div class="offer-card">
+
+                    <img src="/images/kulaklik.jpg"
+                         alt="Kablosuz Kulaklık" />
+
+                    <div class="offer-name">
+                        Kablosuz Kulaklık
+                    </div>
+
+                    <div class="offer-price">
+                        Fırsatları Keşfet
+                    </div>
+
+                </div>
+
+            </a>
+        </div>
+
+
+        <!-- OFİS SANDALYESİ -->
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Home"
+               asp-action="OfferProducts"
+               asp-route-type="Ofis Sandalyesi"
+               style="text-decoration: none; color: inherit;">
+
+                <div class="offer-card">
+
+                    <img src="/images/ofis-sandalyesi.jpg"
+                         alt="Ofis Sandalyesi" />
+
+                    <div class="offer-name">
+                        Ofis Sandalyesi
+                    </div>
+
+                    <div class="offer-price">
+                        Fırsatları Keşfet
+                    </div>
+
+                </div>
+
+            </a>
+        </div>
+
+    </div>
+
+</div>
+        <!-- AVANTAJLAR -->
+
+        <div class="row mt-5 mb-5">
+
+            <div class="col-md-3 mb-3">
+                <div class="advantage-card">
+
+                    <div class="advantage-icon">🚚</div>
+
+                    <div class="advantage-title">
+                        Hızlı Teslimat
+                    </div>
+
+                    <div class="advantage-text">
+                        Siparişleriniz güvenle hazırlanır.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="advantage-card">
+
+                    <div class="advantage-icon">🔒</div>
+
+                    <div class="advantage-title">
+                        Güvenli Alışveriş
+                    </div>
+
+                    <div class="advantage-text">
+                        Bilgileriniz güvenle korunur.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="advantage-card">
+
+                    <div class="advantage-icon">↩️</div>
+
+                    <div class="advantage-title">
+                        Kolay İade
+                    </div>
+
+                    <div class="advantage-text">
+                        Kolay ve hızlı iade süreci.
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <div class="advantage-card">
+
+                    <div class="advantage-icon">💳</div>
+
+                    <div class="advantage-title">
+                        Güvenli Ödeme
+                    </div>
+
+                    <div class="advantage-text">
+                        Güvenli ödeme deneyimi.
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+
+    </div>

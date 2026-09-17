@@ -1,0 +1,30 @@
+@model ECommerceMVC.Models.Cart
+
+<h1>Yeni Sepet Ekle</h1>
+
+<form asp-action="Create" method="post">
+
+    <div class="mb-3">
+        <label asp-for="CustomerId" class="form-label">Müşteri ID</label>
+        <input asp-for="CustomerId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="ProductId" class="form-label">Ürün ID</label>
+        <input asp-for="ProductId" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Quantity" class="form-label">Adet</label>
+        <input asp-for="Quantity" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        Kaydet
+    </button>
+
+    <a asp-action="Index" class="btn btn-secondary">
+        İptal
+    </a>
+
+</form>

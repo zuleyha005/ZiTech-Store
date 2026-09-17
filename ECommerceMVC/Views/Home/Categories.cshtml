@@ -1,0 +1,141 @@
+@{
+    ViewData["Title"] = "Kategoriler";
+
+    var categories = new[]
+    {
+
+new { Name = "Bilgisayar", Image = "laptop.jpg" },
+        new { Name = "Telefon", Image = "telefon.jpg" },
+        new { Name = "Tablet", Image = "tablet.jpg" },
+        new { Name = "Kulaklık", Image = "kulaklik.jpg" },
+        new { Name = "Kamera", Image = "kamera.jpg" },
+        new { Name = "Televizyon", Image = "televizyon.jpg" },
+        new { Name = "Konsol", Image = "konsol.jpg" },
+        new { Name = "Bilgisayar Aksesuarları", Image = "mouse.jpg" },
+        new { Name = "Mobilya", Image = "masa.jpg" },
+        new { Name = "Dekorasyon", Image = "dekorasyon.jpg" },
+        new { Name = "Aydınlatma", Image = "aydinlatma.jpg" },
+        new { Name = "Bahçe", Image = "bahce.jpg" },
+        new { Name = "Ofis", Image = "ofis-sandalyesi.jpg" },
+        new { Name = "Kitap", Image = "kitap.jpg" },
+        new { Name = "Ayakkabı", Image = "ayakkabi.jpg" },
+        new { Name = "Çanta", Image = "canta.jpg" },
+        new { Name = "Saat", Image = "akilli-saat.jpg" },
+        new { Name = "Kozmetik", Image = "kozmetik.jpg" },
+        new { Name = "Oyuncak", Image = "oyuncak.jpg" },
+        new { Name = "Müzik", Image = "muzik.jpg" },
+        new { Name = "Fotoğrafçılık", Image = "fotografcilik.jpg" },
+        new { Name = "Seyahat", Image = "seyahat.jpg" },
+        new { Name = "Bisiklet", Image = "bisiklet.jpg" },
+        new { Name = "Elektrikli Ev Aletleri", Image = "elektrikli-ev-aletleri.jpg" },
+    };
+}
+
+<style>
+    body {
+        background-color: #f7f5ef;
+    }
+
+    main {
+        background-color: #f7f5ef;
+    }
+
+    .container {
+        background-color: transparent;
+    }
+
+    .category-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        height: 100%;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .category-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-image {
+        width: 100%;
+        height: 150px;
+        object-fit: contain;
+        display: block;
+        margin: 0 auto 12px auto;
+        border-radius: 6px;
+    }
+
+    .category-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 12px;
+        min-height: 24px;
+    }
+
+    .category-button {
+        display: inline-block;
+        background-color: #198754;
+        color: white !important;
+        text-decoration: none;
+        border: none;
+        border-radius: 5px;
+        padding: 8px 18px;
+        font-size: 14px;
+        font-weight: 600;
+        transition: background-color 0.2s ease;
+    }
+
+    .category-button:hover {
+        background-color: #157347;
+        color: white !important;
+        text-decoration: none;
+    }
+
+    .category-grid {
+        margin-top: 10px;
+    }
+</style>
+
+<div class="container mt-4">
+
+    <h2 class="section-title text-center">
+        Kategoriler
+    </h2>
+
+    <div class="row category-grid">
+
+        @foreach (var category in categories)
+        {
+            <div class="col-md-3 mb-4">
+
+                <div class="category-card">
+
+                    <img src="/images/@category.Image" alt="@category.Name" class="category-image"
+                         onerror="this.src='/images/default-category.jpg';" />
+
+                    <div class="category-name">
+                        @category.Name
+                    </div>
+
+                    <a asp-controller="Home" asp-action="CategoryProducts" asp-route-name="@category.Name"
+                       class="category-button">
+                        Ürünleri Gör
+                    </a>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+</div>
+
+</div>

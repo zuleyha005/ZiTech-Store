@@ -1,0 +1,483 @@
+@model List<ECommerceMVC.Models.Product>
+
+@functions {
+    string GetProductImage(string productName)
+    {
+        var name = productName.ToLower();
+
+        if (name.Contains("bisiklet"))
+            return "/images/bisiklet.jpg";
+
+        if (name.Contains("duvar saati"))
+            return "/images/duvar-saati.jpg";
+
+        if (name.Contains("mouse"))
+            return "/images/mouse.jpg";
+
+        if (name.Contains("çalışma masası"))
+            return "/images/masa.jpg";
+
+        if (name.Contains("masa lambası"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("laptop çantası"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("laptop"))
+            return "/images/laptop.jpg";
+
+        if (name.Contains("yazıcı"))
+            return "/images/yazici.jpg";
+
+        if (name.Contains("powerbank"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("ofis sandalyesi"))
+            return "/images/ofis-sandalyesi.jpg";
+
+        if (name.Contains("akıllı saat"))
+            return "/images/akilli-saat.jpg";
+
+        if (name.Contains("fitness matı"))
+            return "/images/fitness-mat.jpg";
+
+        if (name.Contains("tablet"))
+            return "/images/tablet.jpg";
+
+        if (name.Contains("telefon"))
+            return "/images/telefon.jpg";
+
+        if (name.Contains("ssd"))
+            return "/images/ssd.jpg";
+
+        if (name.Contains("kulaklık"))
+            return "/images/kulaklik.jpg";
+
+        if (name.Contains("kamera"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("televizyon"))
+            return "/images/televizyon.jpg";
+
+        if (name.Contains("konsol"))
+            return "/images/konsol.jpg";
+
+        if (name.Contains("klavye"))
+            return "/images/klavye.jpg";
+
+        if (name.Contains("parfüm"))
+            return "/images/parfum.jpg";
+
+        if (name.Contains("gözlük"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("kitap"))
+            return "/images/kitap.jpg";
+
+        if (name.Contains("oyuncak"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("ayakkabı"))
+            return "/images/ayakkabi.jpg";
+
+        if (name.Contains("çanta"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("saat"))
+            return "/images/saat.jpg";
+
+        if (name.Contains("takı"))
+            return "/images/taki.jpg";
+
+        if (name.Contains("kozmetik"))
+            return "/images/kozmetik.jpg";
+
+        if (name.Contains("mobilya"))
+            return "/images/mobilya.jpg";
+
+        if (name.Contains("dekorasyon"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("aydınlatma"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("bahçe"))
+            return "/images/bahce.jpg";
+
+        if (name.Contains("ofis"))
+            return "/images/ofis.jpg";
+
+        if (name.Contains("kırtasiye"))
+            return "/images/kirtasiye.jpg";
+
+        if (name.Contains("dekoratif vazo"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("güneş gözlüğü"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("puzzle"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("fotoğraf makinesi"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("valiz"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("şarj cihazı"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("dambıl"))
+            return "/images/dambıl.jpg";
+
+        if (name.Contains("şampuan"))
+            return "/images/şampuan.jpg";
+
+        if (name.Contains("bluetooth hoparlör"))
+            return "/images/hoparlör.jpg";
+
+        if (name.Contains("monitör"))
+            return "/images/monitör.jpg";
+
+        if (name.Contains("usb bellek"))
+            return "/images/usb-bellek.jpg";
+
+        if (name.Contains("elektrikli süpürge"))
+            return "/images/elektrikli-süpürge.jpg";
+
+        return "";
+    }
+}
+@{
+    ViewData["Title"] = ViewBag.CategoryName;
+}
+
+<div class="container mt-4">
+
+    <!-- Kategori Başlığı -->
+    <h2 class="section-title text-center">
+        @ViewBag.CategoryName Ürünleri
+    </h2>
+
+    @if (Model.Count == 0)
+    {
+        <div class="alert alert-warning mt-4">
+            Bu kategoride ürün bulunamadı.
+        </div>
+    }
+    else
+    {
+        <!-- Ürün Kartları -->
+        <div class="row product-grid">
+
+            @foreach (var product in Model)
+            {
+                <div class="col-md-3 col-sm-6 mb-4">
+
+                    <div class="product-card">
+
+                        <!-- Ürün Fotoğrafı -->
+                        <div class="product-image-container">
+                            <img src="@GetProductImage(product.Name ?? "")" alt="@product.Name" class="product-image" />
+                        </div>
+
+                        <!-- Ürün Bilgileri -->
+                        <div class="product-info">
+
+                            <div class="product-name">
+                                @product.Name
+                            </div>
+
+                            <div class="product-price">
+                                @product.Price ₺
+                            </div>
+
+                            <button type="button" class="buy-button" onclick="addToCart(@product.Id)">
+                                🛒 Sepete Ekle
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+
+        </div>
+    }
+
+</div>
+
+
+<style>
+    body {
+    background-color: #f7f5ef;
+}
+
+main {
+    background-color: #f7f5ef;
+}
+
+.container {
+    background-color: transparent;
+}
+
+    /* Kategori başlığı */
+
+    .category-title {
+        background-color: #596166;
+        color: white;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 4px;
+        margin-bottom: 20px;
+    }
+
+
+    /* Ürünlerin bulunduğu alan */
+
+    .product-grid {
+        margin-top: 10px;
+    }
+
+
+    /* Ürün kartı */
+
+    .product-card {
+        background-color: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 15px;
+        height: 100%;
+        text-align: center;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+
+    .product-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px rgba(0, 0, 0, 0.15);
+    }
+
+
+    /* Fotoğraf alanı */
+
+    .product-image-container {
+        width: 100%;
+        height: 180px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+
+    /* Ürün fotoğrafı */
+
+    .product-image {
+        width: 100%;
+        height: 180px;
+        object-fit: contain;
+        display: block;
+    }
+
+
+    /* Ürün bilgileri */
+
+    .product-info {
+        text-align: left;
+    }
+
+
+    .product-name {
+        font-weight: 600;
+        min-height: 40px;
+        margin-bottom: 8px;
+    }
+
+
+    /* Fiyat */
+
+    .product-price {
+        color: #8b0000;
+        font-weight: bold;
+        margin-bottom: 12px;
+    }
+
+
+    /* Sepete Ekle */
+
+    .buy-button {
+        background-color: #198754;
+        color: white;
+        border: none;
+        font-weight: 600;
+        border-radius: 5px;
+        padding: 7px 15px;
+    }
+
+
+    .buy-button:hover {
+        background-color: #157347;
+        color: white;
+    }
+</style>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+
+    @{
+        int currentPage = ViewBag.CurrentPage;
+        int totalPages = ViewBag.TotalPages;
+        string categoryName = ViewBag.CategoryName;
+    }
+
+    <nav>
+        <ul class="pagination">
+
+            @* Önceki *@
+            @if (currentPage > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-controller="Home"
+                       asp-action="CategoryProducts"
+                       asp-route-name="@categoryName"
+                       asp-route-page="@(currentPage - 1)">
+                        ‹ Önceki
+                    </a>
+                </li>
+            }
+
+            @* İlk sayfa *@
+            <li class="page-item @(currentPage == 1 ? "active" : "")">
+                <a class="page-link"
+                   asp-controller="Home"
+                   asp-action="CategoryProducts"
+                   asp-route-name="@categoryName"
+                   asp-route-page="1">
+                    1
+                </a>
+            </li>
+
+            @* Soldaki üç nokta *@
+            @if (currentPage > 4)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+
+            @* Mevcut sayfanın çevresindeki sayfalar *@
+            @{
+                int startPage = Math.Max(2, currentPage - 2);
+                int endPage = Math.Min(totalPages - 1, currentPage + 2);
+            }
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                if (i > 1 && i < totalPages)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link"
+                           asp-controller="Home"
+                           asp-action="CategoryProducts"
+                           asp-route-name="@categoryName"
+                           asp-route-page="@i">
+                            @i
+                        </a>
+                    </li>
+                }
+            }
+
+            @* Sağdaki üç nokta *@
+            @if (currentPage < totalPages - 3)
+            {
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+            }
+
+            @* Son sayfa *@
+            @if (totalPages > 1)
+            {
+                <li class="page-item @(currentPage == totalPages ? "active" : "")">
+                    <a class="page-link"
+                       asp-controller="Home"
+                       asp-action="CategoryProducts"
+                       asp-route-name="@categoryName"
+                       asp-route-page="@totalPages">
+                        @totalPages
+                    </a>
+                </li>
+            }
+
+            @* Sonraki *@
+            @if (currentPage < totalPages)
+            {
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-controller="Home"
+                       asp-action="CategoryProducts"
+                       asp-route-name="@categoryName"
+                       asp-route-page="@(currentPage + 1)">
+                        Sonraki ›
+                    </a>
+                </li>
+            }
+
+        </ul>
+    </nav>
+
+</div>
+
+
+<script>
+
+    async function addToCart(productId) {
+
+        try {
+
+            const response = await fetch('/Cart/AddToCart', {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    productId: productId
+                })
+            });
+
+
+            if (response.ok) {
+
+                window.location.href = '/Cart';
+
+            }
+            else if (response.status === 401) {
+
+                window.location.href = '/Account/Login';
+
+            }
+            else {
+
+                alert("Ürün sepete eklenirken bir hata oluştu.");
+
+            }
+
+        }
+        catch (error) {
+
+            console.error(error);
+
+            alert("Sunucuya bağlanırken bir hata oluştu.");
+
+        }
+
+    }
+
+</script>

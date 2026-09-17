@@ -1,0 +1,283 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+/* AMAZON TARZI ÜST MENÜ */
+
+.navbar {
+    background-color: #131921 !important;
+    padding: 10px 20px;
+    border-bottom: 3px solid #232f3e !important;
+}
+
+.navbar-brand {
+    color: white !important;
+    font-size: 28px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.navbar-brand:hover {
+    color: #f1ede8 !important;
+}
+
+
+/* Arama kutusu */
+
+.amazon-search {
+    width: 700px;
+    max-width: 1000px;
+    margin-left: 250px;
+    margin-right: 15px;
+    height: 42px;
+}
+
+.amazon-search input {
+    height: 42px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    padding-left: 15px;
+    font-size: 15px;
+}
+
+.amazon-search input:focus {
+    box-shadow: none;
+    outline: none;
+}
+
+.amazon-search button {
+    width: 55px;
+    height: 42px;
+    border: none;
+    background-color: #febd69;
+    border-radius: 0 5px 5px 0;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.amazon-search button:hover {
+    background-color: #47f3a3;
+}
+
+
+/* Ana Sayfa */
+
+.navbar .nav-link {
+    color: white !important;
+}
+
+.navbar .nav-link:hover {
+    color: #f2ece4 !important;
+}
+
+
+/* Sepet */
+
+#cartCount {
+    background-color: #faf8f5 !important;
+}
+
+
+/* Mobil uyumluluk */
+
+@media (max-width: 768px) {
+
+    .amazon-search {
+        margin: 10px 0;
+        max-width: none;
+        width: 100%;
+    }
+
+}
+
+.ana-sayfa-link {
+    color: white !important;
+    margin-right: 20px;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+}
+
+.ana-sayfa-link:hover {
+    color: #febd69 !important;
+}
+
+/* Öne Çıkan Ürünler tam genişlik çubuğu */
+
+.featured-bar {
+    width: 100%;
+    background-color: #1f4d3a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+.featured-bar a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.featured-bar a:hover {
+    text-decoration: underline;
+}
+
+/* Satın Al butonları */
+.buy-button {
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    font-weight: 600;
+    border-radius: 5px;
+    padding: 7px 15px;
+}
+
+.buy-button:hover {
+    background-color: #0b5ed7;
+    color: white;
+}
+
+/* Giriş / Çıkış butonu */
+.navbar .btn-warning {
+    background-color: #febd69 !important;
+    border-color: #febd69 !important;
+    color: #111 !important;
+    font-weight: 600;
+}
+
+.navbar .btn-warning:hover {
+    background-color: #f3a847 !important;
+    border-color: #f3a847 !important;
+    color: #111 !important;
+}
+
+/* ================================
+   ZiTech Store Yeni Renk Paleti
+   ================================ */
+
+/* Üst Navbar */
+.site-navbar {
+    background-color: #0d3b2e !important;
+    border-bottom: none !important;
+}
+
+/* Logo */
+.site-navbar .navbar-brand {
+    color: white !important;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.logo-zitech {
+    color: #ffffff;
+}
+
+.logo-store {
+    color: #e6d2ae;
+}
+
+/* Navbar yazıları */
+.site-navbar .nav-link {
+    color: #ffffff !important;
+}
+
+.site-navbar .nav-link:hover {
+    color: #e6d2ae !important;
+}
+
+/* Giriş Yap / Çıkış Yap / Hesabım */
+.site-navbar .btn-warning {
+    background-color: #e6d2ae !important;
+    border-color: #e6d2ae !important;
+    color: #173b2f !important;
+    font-weight: 600;
+}
+
+.site-navbar .btn-warning:hover {
+    background-color: #d8c198 !important;
+    border-color: #d8c198 !important;
+    color: #173b2f !important;
+}
+
+/* Arama kutusu */
+.site-navbar .amazon-search input {
+    background-color: #ffffff;
+    border: none;
+    color: #333;
+}
+
+/* Arama butonu */
+.site-navbar .amazon-search button {
+    background-color: #e6d2ae;
+    border: none;
+    color: #173b2f;
+}
+
+.site-navbar .amazon-search button:hover {
+    background-color: #d8c198;
+}
+
+/* Sepet */
+.site-navbar #cartCount {
+    background-color: #ffffff !important;
+    color: #173b2f !important;
+}
+
+/* Sayfa genel arka planı */
+body {
+    background-color: #faf8f2;
+}
+
+/* Alt menü çubuğu */
+
+.sub-navbar {
+    background-color: #1f4d3a;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.sub-navbar a {
+    color: #ffffff;
+    text-decoration: none;
+    margin-right: 0 10px;
+    font-weight: 500;
+    font-size: 15px;
+    display: inline-block;
+}
+
+.sub-navbar a:hover {
+    color: #d8c198;
+}

@@ -1,0 +1,782 @@
+@model List<ECommerceMVC.Models.Product>
+@functions {
+    string GetProductImage(string productName)
+    {
+        var name = productName.ToLower();
+
+        if (name.Contains("bisiklet"))
+            return "/images/bisiklet.jpg";
+
+        if (name.Contains("duvar saati"))
+            return "/images/duvar-saati.jpg";
+
+        if (name.Contains("mouse"))
+            return "/images/mouse.jpg";
+
+        if (name.Contains("çalışma masası"))
+            return "/images/masa.jpg";
+
+        if (name.Contains("masa lambası"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("laptop çantası"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("laptop"))
+            return "/images/laptop.jpg";
+
+        if (name.Contains("yazıcı"))
+            return "/images/yazici.jpg";
+
+        if (name.Contains("powerbank"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("ofis sandalyesi"))
+            return "/images/ofis-sandalyesi.jpg";
+
+        if (name.Contains("akıllı saat"))
+            return "/images/akilli-saat.jpg";
+
+        if (name.Contains("fitness matı"))
+            return "/images/fitness-mat.jpg";
+
+        if (name.Contains("tablet"))
+            return "/images/tablet.jpg";
+
+        if (name.Contains("telefon"))
+            return "/images/telefon.jpg";
+
+        if (name.Contains("ssd"))
+            return "/images/ssd.jpg";
+
+        if (name.Contains("kulaklık"))
+            return "/images/kulaklik.jpg";
+
+        if (name.Contains("kamera"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("televizyon"))
+            return "/images/televizyon.jpg";
+
+        if (name.Contains("konsol"))
+            return "/images/konsol.jpg";
+
+        if (name.Contains("klavye"))
+            return "/images/klavye.jpg";
+
+        if (name.Contains("parfüm"))
+            return "/images/parfum.jpg";
+
+        if (name.Contains("gözlük"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("kitap"))
+            return "/images/kitap.jpg";
+
+        if (name.Contains("oyuncak"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("ayakkabı"))
+            return "/images/ayakkabi.jpg";
+
+        if (name.Contains("çanta"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("saat"))
+            return "/images/saat.jpg";
+
+        if (name.Contains("takı"))
+            return "/images/taki.jpg";
+
+        if (name.Contains("kozmetik"))
+            return "/images/kozmetik.jpg";
+
+        if (name.Contains("mobilya"))
+            return "/images/mobilya.jpg";
+
+        if (name.Contains("dekorasyon"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("aydınlatma"))
+            return "/images/aydinlatma.jpg";
+
+        if (name.Contains("bahçe"))
+            return "/images/bahce.jpg";
+
+        if (name.Contains("ofis"))
+            return "/images/ofis.jpg";
+
+        if (name.Contains("kırtasiye"))
+            return "/images/kirtasiye.jpg";
+
+        if (name.Contains("dekoratif vazo"))
+            return "/images/dekorasyon.jpg";
+
+        if (name.Contains("güneş gözlüğü"))
+            return "/images/gozluk.jpg";
+
+        if (name.Contains("puzzle"))
+            return "/images/oyuncak.jpg";
+
+        if (name.Contains("fotoğraf makinesi"))
+            return "/images/kamera.jpg";
+
+        if (name.Contains("valiz"))
+            return "/images/canta.jpg";
+
+        if (name.Contains("şarj cihazı"))
+            return "/images/powerbank.jpg";
+
+        if (name.Contains("dambıl"))
+            return "/images/dambıl.jpg";
+
+        if (name.Contains("şampuan"))
+            return "/images/şampuan.jpg";
+
+        if (name.Contains("bluetooth hoparlör"))
+            return "/images/hoparlör.jpg";
+
+        if (name.Contains("monitör"))
+            return "/images/monitör.jpg";
+
+        if (name.Contains("usb bellek"))
+            return "/images/usb-bellek.jpg";
+
+        if (name.Contains("elektrikli süpürge"))
+            return "/images/elektrikli-süpürge.jpg";
+
+        return "";
+    }
+}
+
+<div class="container mt-4">
+
+    <h2 class="section-title text-center">
+        Tüm Ürünler
+    </h2>
+    <!-- Filtreleme -->
+    <div class="filter-wrapper">
+
+        <button type="button" class="filter-button" onclick="toggleFilter()">
+            ☰ Filtrele
+        </button>
+
+        <div id="filterPanel" class="filter-panel">
+
+            <div class="filter-title">
+                Filtreleme
+            </div>
+
+            <hr />
+
+            <label>Ürün Ara</label>
+            <input type="text" id="searchInput" class="form-control mb-3" placeholder="Ürün adı..."
+                   value="@ViewBag.Search" />
+
+            <div class="price-row">
+
+                <div class="price-column">
+                    <label>Min. Fiyat</label>
+                    <input type="number" id="minPriceInput" class="form-control" placeholder="₺ Min"
+                           value="@ViewBag.MinPrice" />
+                </div>
+
+                <div class="price-column">
+                    <label>Max. Fiyat</label>
+                    <input type="number" id="maxPriceInput" class="form-control" placeholder="₺ Max"
+                           value="@ViewBag.MaxPrice" />
+                </div>
+
+            </div>
+
+            <label>Kategori</label>
+
+            <select id="categorySelect" class="form-control mb-3">
+
+                <option value="" selected="@(string.IsNullOrEmpty(ViewBag.Category) ? "selected" : null)">
+                    Tüm Kategoriler
+                </option>
+
+                <option value="Elektronik" selected="@(ViewBag.Category == "Elektronik" ? "selected" : null)">Elektronik
+                </option>
+                <option value="Bilgisayar" selected="@(ViewBag.Category == "Bilgisayar" ? "selected" : null)">Bilgisayar
+                </option>
+                <option value="Telefon" selected="@(ViewBag.Category == "Telefon" ? "selected" : null)">Telefon</option>
+                <option value="Tablet" selected="@(ViewBag.Category == "Tablet" ? "selected" : null)">Tablet</option>
+                <option value="Kulaklık" selected="@(ViewBag.Category == "Kulaklık" ? "selected" : null)">Kulaklık
+                </option>
+                <option value="Kamera" selected="@(ViewBag.Category == "Kamera" ? "selected" : null)">Kamera</option>
+                <option value="Televizyon" selected="@(ViewBag.Category == "Televizyon" ? "selected" : null)">Televizyon
+                </option>
+                <option value="Konsol" selected="@(ViewBag.Category == "Konsol" ? "selected" : null)">Konsol</option>
+
+                <option value="Ev ve Yaşam" selected="@(ViewBag.Category == "Ev ve Yaşam" ? "selected" : null)">Ev ve
+                    Yaşam</option>
+                    <option value="Mobilya" selected="@(ViewBag.Category == "Mobilya" ? "selected" : null)">Mobilya</option>
+                    <option value="Dekorasyon" selected="@(ViewBag.Category == "Dekorasyon" ? "selected" : null)">Dekorasyon
+                    </option>
+                    <option value="Aydınlatma" selected="@(ViewBag.Category == "Aydınlatma" ? "selected" : null)">Aydınlatma
+                    </option>
+                    <option value="Bahçe" selected="@(ViewBag.Category == "Bahçe" ? "selected" : null)">Bahçe</option>
+
+                    <option value="Ofis" selected="@(ViewBag.Category == "Ofis" ? "selected" : null)">Ofis</option>
+                    <option value="Kırtasiye" selected="@(ViewBag.Category == "Kırtasiye" ? "selected" : null)">Kırtasiye
+                    </option>
+                    <option value="Kitap" selected="@(ViewBag.Category == "Kitap" ? "selected" : null)">Kitap</option>
+
+                    <option value="Spor" selected="@(ViewBag.Category == "Spor" ? "selected" : null)">Spor</option>
+                    <option value="Fitness" selected="@(ViewBag.Category == "Fitness" ? "selected" : null)">Fitness</option>
+
+                    <option value="Giyim" selected="@(ViewBag.Category == "Giyim" ? "selected" : null)">Giyim</option>
+                    <option value="Kadın Giyim" selected="@(ViewBag.Category == "Kadın Giyim" ? "selected" : null)">Kadın
+                        Giyim</option>
+                        <option value="Erkek Giyim" selected="@(ViewBag.Category == "Erkek Giyim" ? "selected" : null)">Erkek
+                            Giyim</option>
+                            <option value="Çocuk Giyim" selected="@(ViewBag.Category == "Çocuk Giyim" ? "selected" : null)">Çocuk
+                                Giyim</option>
+
+                                <option value="Ayakkabı" selected="@(ViewBag.Category == "Ayakkabı" ? "selected" : null)">Ayakkabı
+                                </option>
+                                <option value="Çanta" selected="@(ViewBag.Category == "Çanta" ? "selected" : null)">Çanta</option>
+                                <option value="Saat" selected="@(ViewBag.Category == "Saat" ? "selected" : null)">Saat</option>
+                                <option value="Takı" selected="@(ViewBag.Category == "Takı" ? "selected" : null)">Takı</option>
+                                <option value="Kozmetik" selected="@(ViewBag.Category == "Kozmetik" ? "selected" : null)">Kozmetik
+                                </option>
+                                <option value="Kişisel Bakım" selected="@(ViewBag.Category == "Kişisel Bakım" ? "selected" : null)">
+                                    Kişisel Bakım</option>
+
+                                    <option value="Oyuncak" selected="@(ViewBag.Category == "Oyuncak" ? "selected" : null)">Oyuncak</option>
+                                    <option value="Evcil Hayvan" selected="@(ViewBag.Category == "Evcil Hayvan" ? "selected" : null)">Evcil
+                                        Hayvan</option>
+                                        <option value="Otomotiv" selected="@(ViewBag.Category == "Otomotiv" ? "selected" : null)">Otomotiv
+                                        </option>
+
+                                        <option value="Müzik" selected="@(ViewBag.Category == "Müzik" ? "selected" : null)">Müzik</option>
+                                        <option value="Film" selected="@(ViewBag.Category == "Film" ? "selected" : null)">Film</option>
+                                        <option value="Hobi" selected="@(ViewBag.Category == "Hobi" ? "selected" : null)">Hobi</option>
+                                        <option value="Sanat" selected="@(ViewBag.Category == "Sanat" ? "selected" : null)">Sanat</option>
+                                        <option value="Fotoğrafçılık" selected="@(ViewBag.Category == "Fotoğrafçılık" ? "selected" : null)">
+                                            Fotoğrafçılık</option>
+
+                                            <option value="Seyahat" selected="@(ViewBag.Category == "Seyahat" ? "selected" : null)">Seyahat</option>
+                                            <option value="Valiz" selected="@(ViewBag.Category == "Valiz" ? "selected" : null)">Valiz</option>
+                                            <option value="Bisiklet" selected="@(ViewBag.Category == "Bisiklet" ? "selected" : null)">Bisiklet
+                                            </option>
+                                            <option value="Motor Aksesuarları"
+                                                    selected="@(ViewBag.Category == "Motor Aksesuarları" ? "selected" : null)">Motor Aksesuarları
+                                            </option>
+
+                                            <option value="Akıllı Ev" selected="@(ViewBag.Category == "Akıllı Ev" ? "selected" : null)">Akıllı Ev
+                                            </option>
+                                            <option value="Güvenlik" selected="@(ViewBag.Category == "Güvenlik" ? "selected" : null)">Güvenlik
+                                            </option>
+                                            <option value="Elektrikli Ev Aletleri"
+                                                    selected="@(ViewBag.Category == "Elektrikli Ev Aletleri" ? "selected" : null)">Elektrikli Ev
+                                                Aletleri</option>
+
+                                            </select>
+
+
+                                            <label>Sıralama</label>
+
+                                            <select id="sortSelect" class="form-control mb-3">
+
+                                                <option value="" selected="@(ViewBag.Sort == null || ViewBag.Sort == "" ? "selected" : null)">
+                                                    Varsayılan
+                                                </option>
+
+                                                <option value="priceAsc" selected="@(ViewBag.Sort == "priceAsc" ? "selected" : null)">
+                                                    Fiyat: Düşükten Yükseğe
+                                                </option>
+
+                                                <option value="priceDesc" selected="@(ViewBag.Sort == "priceDesc" ? "selected" : null)">
+                                                    Fiyat: Yüksekten Düşüğe
+                                                </option>
+
+                                                <option value="nameAsc" selected="@(ViewBag.Sort == "nameAsc" ? "selected" : null)">
+                                                    İsme Göre A-Z
+                                                </option>
+
+                                                <option value="nameDesc" selected="@(ViewBag.Sort == "nameDesc" ? "selected" : null)">
+                                                    İsme Göre Z-A
+                                                </option>
+
+                                            </select>
+                                            <div class="filter-buttons">
+
+                                                <button type="button" class="apply-filter" onclick="applyFilters()">
+                                                    Filtreleri Uygula
+                                                </button>
+
+                                                <button type="button" class="clear-filter" onclick="clearFilters()">
+                                                    Filtreleri Temizle
+                                                </button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger text-center mt-4">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+                                   else if (Model == null || !Model.Any())
+{
+    <div class="no-products-message">
+        <div class="no-products-icon">
+            🔍
+        </div>
+
+        <h4>Ürün Bulunamadı</h4>
+
+        <p>
+            Seçilen filtrelere uygun ürün bulunamadı.
+        </p>
+    </div>
+}
+else
+{
+    <div class="row">
+
+        @foreach (var item in Model)
+        {
+            <div class="col-md-3 mb-4">
+
+                <div class="offer-card">
+
+                    <img src="@GetProductImage(item.Name ?? "")"
+                         alt="@item.Name" />
+
+                    <div class="offer-name">
+                        @item.Name
+                    </div>
+
+                    <div class="offer-price">
+                        @item.Price ₺
+                    </div>
+
+                    <button type="button"
+                            class="btn buy-button btn-sm mt-2"
+                            onclick="addToCart(@item.Id)">
+                        🛒 Sepete Ekle
+                    </button>
+
+                </div>
+
+            </div>
+        }
+
+    </div>
+}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div class="d-flex justify-content-center mt-4">
+
+                            @{
+                                int currentPage = ViewBag.CurrentPage;
+                                int totalPages = ViewBag.TotalPages;
+                            }
+
+                            <nav>
+                                <ul class="pagination">
+
+                                    @* Önceki *@
+                                    @if (currentPage > 1)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="Home" asp-action="AllProducts" asp-route-page="@(currentPage - 1)">
+                                                ‹ Önceki
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @* İlk sayfa *@
+                                    <li class="page-item @(currentPage == 1 ? "active" : "")">
+                                        <a class="page-link" asp-controller="Home" asp-action="AllProducts" asp-route-page="1">
+                                            1
+                                        </a>
+                                    </li>
+
+                                    @* Soldaki üç nokta *@
+                                    @if (currentPage > 4)
+                                    {
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    }
+
+                                    @* Mevcut sayfanın çevresindeki sayfalar *@
+                                    @{
+                                        int startPage = Math.Max(2, currentPage - 2);
+                                        int endPage = Math.Min(totalPages - 1, currentPage + 2);
+                                    }
+
+                                    @for (int i = startPage; i <= endPage; i++)
+                                    {
+                                        if (i > 1 && i < totalPages)
+                                        {
+                                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                                <a class="page-link" asp-controller="Home" asp-action="AllProducts" asp-route-page="@i">
+                                                    @i
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+
+                                    @* Sağdaki üç nokta *@
+                                    @if (currentPage < totalPages - 3)
+                                    {
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    }
+
+                                    @* Son sayfa *@
+                                    @if (totalPages > 1)
+                                    {
+                                        <li class="page-item @(currentPage == totalPages ? "active" : "")">
+                                            <a class="page-link" asp-controller="Home" asp-action="AllProducts" asp-route-page="@totalPages">
+                                                @totalPages
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @* Sonraki *@
+                                    @if (currentPage < totalPages)
+                                    {
+                                        <li class="page-item">
+                                            <a class="page-link" asp-controller="Home" asp-action="AllProducts" asp-route-page="@(currentPage + 1)">
+                                                Sonraki ›
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </nav>
+
+                        </div>
+                        <script>
+                            function toggleFilter() {
+                                const filterPanel = document.getElementById("filterPanel");
+
+                                filterPanel.classList.toggle("active");
+                            }
+
+                            async function addToCart(productId) {
+
+                                try {
+
+                                    const response = await fetch('/Cart/AddToCart', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            productId: productId
+                                        })
+                                    });
+
+                                    if (response.ok) {
+                                        window.location.href = '/Cart';
+                                    }
+                                    else if (response.status === 401) {
+                                        window.location.href = '/Account/Login';
+                                    }
+                                    else {
+                                        alert("Ürün sepete eklenirken bir hata oluştu.");
+                                    }
+
+                                }
+                                catch (error) {
+                                    console.error(error);
+                                    alert("Sunucuya bağlanırken bir hata oluştu.");
+                                }
+                            }
+                            function applyFilters() {
+
+                                const search = document.getElementById("searchInput").value;
+                                const minPrice = document.getElementById("minPriceInput").value;
+                                const maxPrice = document.getElementById("maxPriceInput").value;
+                                const sort = document.getElementById("sortSelect").value;
+                                const category = document.getElementById("categorySelect").value;
+
+                                const params = new URLSearchParams();
+
+                                if (search) {
+                                    params.append("search", search);
+                                }
+
+                                if (minPrice) {
+                                    params.append("minPrice", minPrice);
+                                }
+
+                                if (maxPrice) {
+                                    params.append("maxPrice", maxPrice);
+                                }
+
+                                if (sort) {
+                                    params.append("sort", sort);
+                                }
+
+                                if (category) {
+                                    params.append("category", category);
+                                }
+
+                                params.append("page", "1");
+
+                                window.location.href = "/Home/AllProducts?" + params.toString();
+                            }
+
+
+                            function clearFilters() {
+
+                                window.location.href = "/Home/AllProducts?page=1";
+                            }
+                        </script>
+
+                        <style>
+                            body {
+                                background-color: #f7f5ef;
+                            }
+
+                            main {
+                                background-color: #f7f5ef;
+                            }
+
+                            .container {
+                                background-color: transparent;
+                            }
+
+                            .offer-card {
+                                background: #f8f9fa;
+                                border-radius: 10px;
+                                padding: 15px;
+                                height: 100%;
+                                text-align: left;
+                                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+                            }
+
+                            .offer-card img {
+                                width: 100%;
+                                height: 180px;
+                                object-fit: contain;
+                                display: block;
+                                margin-bottom: 10px;
+                            }
+
+                            .offer-name {
+                                font-weight: 600;
+                                font-size: 15px;
+                                margin-bottom: 8px;
+                            }
+
+                            .offer-price {
+                                font-weight: 700;
+                                font-size: 16px;
+                                margin-bottom: 8px;
+                            }
+
+                            .all-products-header {
+                                background-color: #6c757d;
+                                font-weight: bold;
+                                padding: 10px 15px;
+                                border-radius: 5px;
+                                margin-bottom: 15px;
+                            }
+
+                            .offer-card .buy-button {
+                                background-color: #198754 !important;
+                                color: white !important;
+                                border: none;
+                                font-weight: 600;
+                                border-radius: 5px;
+                                padding: 7px 15px;
+                            }
+
+                            .offer-card .buy-button:hover {
+                                background-color: #157347 !important;
+                                color: white !important;
+                            }
+
+                            /* Filtreleme alanı */
+                            .container {
+                                position: relative;
+                            }
+
+                            .filter-wrapper {
+                                position: absolute;
+                                left: -200px;
+                                top: -3px;
+                                z-index: 1000;
+                            }
+
+                            .filter-button {
+                                background-color: #1f4d3a;
+                                color: white;
+                                border: none;
+                                border-radius: 6px;
+                                padding: 11px 20px;
+                                font-size: 16px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                white-space: nowrap;
+                            }
+
+                            .filter-button:hover {
+                                background-color: #163b2d;
+                            }
+
+                            .filter-panel {
+                                display: none;
+                                width: 230px;
+                                background-color: white;
+                                border-radius: 8px;
+                                padding: 18px;
+                                margin-top: 8px;
+                                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+                                border: 1px solid #ddd;
+                            }
+
+                            .filter-panel.active {
+                                display: block;
+                            }
+
+                            .filter-title {
+                                color: #1f4d3a;
+                                font-size: 17px;
+                                font-weight: 700;
+                            }
+
+                            .filter-panel label {
+                                display: block;
+                                font-size: 13px;
+                                font-weight: 600;
+                                margin-bottom: 5px;
+                                color: #444;
+                            }
+
+                            .filter-panel .form-control {
+                                font-size: 13px;
+                                border-radius: 5px;
+                            }
+
+                            .apply-filter {
+                                width: 100%;
+                                background-color: #198754;
+                                color: white;
+                                border: none;
+                                border-radius: 5px;
+                                padding: 8px;
+                                font-weight: 600;
+                                cursor: pointer;
+                            }
+
+                            .apply-filter:hover {
+                                background-color: #157347;
+                            }
+
+                            .clear-filter {
+                                width: 100%;
+                                margin-top: 8px;
+                                background-color: #e8e5dc;
+                                color: #1f4d3a;
+                                border: none;
+                                border-radius: 5px;
+                                padding: 8px;
+                                font-weight: 600;
+                                cursor: pointer;
+                            }
+
+                            .clear-filter:hover {
+                                background-color: #d9d5ca;
+                            }
+
+                            .price-row {
+                                display: flex;
+                                gap: 8px;
+                                margin-bottom: 15px;
+                            }
+
+                            .price-column {
+                                width: 50%;
+                            }
+
+                            .price-column label {
+                                font-size: 13px;
+                                margin-bottom: 5px;
+                            }
+
+                            .price-column .form-control {
+                                width: 100%;
+                                font-size: 12px;
+                                padding: 7px 6px;
+                            }
+
+                            .filter-buttons {
+                                margin-top: 10px;
+                            }
+
+                            .apply-filter {
+                                width: 100%;
+                                background-color: #198754;
+                                color: white;
+                                border: none;
+                                border-radius: 5px;
+                                padding: 9px;
+                                font-weight: 600;
+                                cursor: pointer;
+                                margin-bottom: 8px;
+                            }
+
+                            .apply-filter:hover {
+                                background-color: #157347;
+                            }
+
+                            .clear-filter {
+                                width: 100%;
+                                background-color: #e9ecef;
+                                color: #333;
+                                border: none;
+                                border-radius: 5px;
+                                padding: 9px;
+                                font-weight: 600;
+                                cursor: pointer;
+                            }
+
+                            .clear-filter:hover {
+                                background-color: #d6d8db;
+                            }
+
+                            .no-products-message {
+    width: 100%;
+    text-align: center;
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 45px 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.no-products-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.no-products-message h4 {
+    color: #3f5143;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.no-products-message p {
+    color: #777;
+    margin-bottom: 0;
+}
+                        </style>

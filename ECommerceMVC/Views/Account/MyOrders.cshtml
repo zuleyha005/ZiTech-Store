@@ -1,0 +1,88 @@
+@model List<ECommerceMVC.Models.Order>
+
+@{
+    ViewData["Title"] = "Geçmiş Siparişlerim";
+}
+
+<div class="container mt-4">
+
+    <h2 class="section-title text-center">
+        Geçmiş Siparişlerim
+    </h2>
+
+    @if (Model == null || Model.Count == 0)
+    {
+        <div class="alert alert-info text-center mt-4">
+            Henüz verilmiş bir siparişiniz bulunmamaktadır.
+        </div>
+    }
+    else
+    {
+        @foreach (var order in Model)
+        {
+            <div class="card shadow-sm border-0 mb-4">
+
+                <div class="card-header bg-dark text-white">
+                    <div class="d-flex justify-content-between">
+
+                        <span>
+                            <strong>Sipariş No:</strong>
+                            @order.Id
+                        </span>
+
+                        <span>
+                            <strong>Tarih:</strong>
+                            @order.OrderDate.ToLocalTime().ToString("dd.MM.yyyy HH:mm")
+                        </span>
+
+                    </div>
+                </div>
+
+                <div class="card-body">
+
+                    @foreach (var item in order.OrderItems)
+                    {
+                        <div class="row border-bottom py-3">
+
+                            <div class="col-md-5">
+                                <strong>Ürün:</strong>
+                                @item.ProductName
+                            </div>
+
+                            <div class="col-md-2">
+                                <strong>Adet:</strong>
+                                @item.Quantity
+                            </div>
+
+                            <div class="col-md-2">
+                                <strong>Birim:</strong>
+                                @item.Price.ToString("N2") ₺
+                            </div>
+
+                            <div class="col-md-3 text-end">
+                                <strong>Toplam:</strong>
+                                @((item.Price * item.Quantity).ToString("N2")) ₺
+                            </div>
+
+                        </div>
+                    }
+
+                    <div class="text-end mt-3">
+
+                        <strong>
+                            Sipariş Toplamı:
+                        </strong>
+
+                        <span class="text-danger fw-bold">
+                            @order.TotalAmount.ToString("N2") ₺
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+        }
+    }
+
+</div>
